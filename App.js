@@ -1,6 +1,5 @@
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
     View,
     Text,
@@ -13,6 +12,9 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { colors } from "./constants";
 import useWallet from "./utils/useWallet";
+import Icon from "react-native-vector-icons/AntDesign";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import CreatedEvents from "./screens/CreatedEvents";
 
 const styles = StyleSheet.create({
     input: {
@@ -78,7 +80,7 @@ function HomeScreen({ navigation }) {
     );
 }
 
-const Stack = createNativeStackNavigator();
+const BottomTabs = createBottomTabNavigator();
 
 export default function App() {
     const [fontsLoaded] = useFonts({
@@ -110,13 +112,34 @@ export default function App() {
 
     return (
         <NavigationContainer onReady={onLayoutRootView}>
-            <Stack.Navigator initialRouteName="Home">
-                <Stack.Screen
-                    name="Home"
-                    component={HomeScreen}
-                    options={{ headerShown: false }}
+            <BottomTabs.Navigator
+                initialRouteName="CreatedEvents"
+                screenOptions={({ route }) => ({
+                    tabBarLabelPosition: "beside-icon",
+                    headerTitleAlign: "center",
+                    tabBarIcon: ({ color, size }) => {
+                        const Icons = {
+                            HomeScreen: "user",
+                            Settings: "setting",
+                            Feed: "earth",
+                        };
+                        return (
+                            <Icon
+                                color={color}
+                                name={Icons[route.name]}
+                                size={size}
+                            />
+                        );
+                    },
+                    tabBarActiveTintColor: colors.brand[500],
+                })}
+            >
+                <BottomTabs.Screen
+                    name="Created Events"
+                    component={CreatedEvents}
                 />
-            </Stack.Navigator>
+                <BottomTabs.Screen name="Tickets" component={HomeScreen} />
+            </BottomTabs.Navigator>
         </NavigationContainer>
     );
 }
