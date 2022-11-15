@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
     },
 });
 
-const Event = ({ event }) => {
-    const { title, thumbnail, host, timestamp, attendees } = event;
+const Event = ({ event, navigation }) => {
+    const { title, thumbnail, host, timestamp, attendees, id } = event;
 
     const [imageB64, setImageB64] = useState();
 
@@ -60,6 +60,9 @@ const Event = ({ event }) => {
                 borderRadius: 5,
                 marginBottom: 10,
             }}
+            onTouchEnd={() =>
+                navigation.navigate("VerifyTicket", { event: event })
+            }
         >
             <View
                 style={{

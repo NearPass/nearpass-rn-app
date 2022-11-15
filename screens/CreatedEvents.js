@@ -1,23 +1,16 @@
 import { useEffect, useState } from "react";
 import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import axios from "axios";
 import { concat } from "../utils/helper";
 import Event from "../components/Event";
 
 const styles = StyleSheet.create({
-    list: {
-        flex: 1,
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-    },
     main: {
         paddingTop: 10,
     },
 });
 
-function CreatedEvents() {
+function CreatedEvents({ navigation }) {
     const [events, setEvents] = useState();
     useEffect(() => {
         async function getEventsByAccountId() {
@@ -57,7 +50,9 @@ function CreatedEvents() {
             <ScrollView>
                 <FlatList
                     data={events}
-                    renderItem={({ item }) => <Event event={item} />}
+                    renderItem={({ item }) => (
+                        <Event event={item} navigation={navigation} />
+                    )}
                     keyExtractor={(item) => {
                         return item.title;
                     }}

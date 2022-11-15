@@ -16,6 +16,8 @@ import Icon from "react-native-vector-icons/AntDesign";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import CreatedEvents from "./screens/CreatedEvents";
 import Ticket from "./screens/Ticket";
+import CreatedEventsStack from "./navigators/CreatedEventsStack";
+import TicketStack from "./navigators/TicketStack";
 
 const styles = StyleSheet.create({
     input: {
@@ -137,9 +139,9 @@ export default function App() {
             >
                 <BottomTabs.Screen
                     name="Created Events"
-                    component={CreatedEvents}
+                    component={CreatedEventsStack}
                 />
-                <BottomTabs.Screen name="Tickets" component={Ticket} />
+                <BottomTabs.Screen name="Tickets" component={TicketStack} />
             </BottomTabs.Navigator>
         </NavigationContainer>
     );
