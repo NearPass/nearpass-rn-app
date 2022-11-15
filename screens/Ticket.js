@@ -4,7 +4,7 @@ import { FlatList, ScrollView, View } from "react-native";
 import { concat } from "../utils/helper";
 import TicketComp from "../components/TicketComp";
 
-const Ticket = () => {
+const Ticket = ({ navigation }) => {
     const [tickets, setTickets] = useState();
     useEffect(() => {
         console.log(TicketComp);
@@ -15,6 +15,9 @@ const Ticket = () => {
                         tickets(where: { accountId: "${accountId}" }) {
                             id
                             name
+                            email
+                            accountId
+                            phone
                             event {
                                 id
                                 title
@@ -46,7 +49,9 @@ const Ticket = () => {
                 <FlatList
                     data={tickets}
                     style={{ padding: 20 }}
-                    renderItem={({ item }) => <TicketComp ticket={item} />}
+                    renderItem={({ item }) => (
+                        <TicketComp ticket={item} navigation={navigation} />
+                    )}
                 />
             </ScrollView>
         </View>

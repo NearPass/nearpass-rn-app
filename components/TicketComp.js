@@ -4,8 +4,8 @@ import { Image, Text, View } from "react-native";
 import { colors } from "../constants";
 import { H5, H6 } from "./Headings";
 
-const TicketComp = ({ ticket }) => {
-    const { event, name, email } = ticket;
+const TicketComp = ({ ticket, navigation }) => {
+    const { event, name, email, id } = ticket;
 
     const [image, setImage] = useState();
 
@@ -44,6 +44,11 @@ const TicketComp = ({ ticket }) => {
                 marginBottom: 10,
                 backgroundColor: "white",
             }}
+            onTouchEnd={() =>
+                navigation.navigate("ShowTicket", {
+                    ticket: ticket,
+                })
+            }
         >
             <View
                 style={{
@@ -68,7 +73,7 @@ const TicketComp = ({ ticket }) => {
                     style={{
                         backgroundColor: "white",
                         height: 55,
-                        width: 45,
+                        width: 50,
                         position: "absolute",
                         bottom: 10,
                         zIndex: 1000,
@@ -80,7 +85,12 @@ const TicketComp = ({ ticket }) => {
                         borderWidth: 2,
                     }}
                 >
-                    <Text style={{ fontSize: 28 }}>#0</Text>
+                    <Text style={{ fontSize: 28 }}>
+                        {id
+                            .replace(event.id, "")
+                            .replace('"', "")
+                            .replace('"', "")}
+                    </Text>
                 </View>
             </View>
             <View
