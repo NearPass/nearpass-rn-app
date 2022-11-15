@@ -15,6 +15,7 @@ import useWallet from "./utils/useWallet";
 import Icon from "react-native-vector-icons/AntDesign";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import CreatedEvents from "./screens/CreatedEvents";
+import Ticket from "./screens/Ticket";
 
 const styles = StyleSheet.create({
     input: {
@@ -138,7 +139,7 @@ export default function App() {
                     name="Created Events"
                     component={CreatedEvents}
                 />
-                <BottomTabs.Screen name="Tickets" component={HomeScreen} />
+                <BottomTabs.Screen name="Tickets" component={Ticket} />
             </BottomTabs.Navigator>
         </NavigationContainer>
     );
