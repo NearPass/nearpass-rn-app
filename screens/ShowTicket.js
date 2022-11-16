@@ -5,7 +5,6 @@ import { colors } from "../constants";
 
 const ShowTicket = ({ route }) => {
     const { ticket } = route.params;
-    console.log(ticket);
     return (
         <View
             style={{
@@ -16,7 +15,7 @@ const ShowTicket = ({ route }) => {
                 padding: 10,
             }}
         >
-            <QRCode size={300} value="https://www.google.com" />
+            <QRCode size={300} value={ticket.id} />
             <View
                 style={{
                     width: "80%",
