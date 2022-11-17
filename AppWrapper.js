@@ -22,6 +22,9 @@ const AppWrapper = () => {
         "Inter-Light": require("./assets/fonts/Inter-Light.ttf"),
     });
 
+    const { walletConnected, setWalletConnected } =
+        React.useContext(AppContext);
+
     React.useEffect(() => {
         async function prepare() {
             await SplashScreen.preventAutoHideAsync();
@@ -39,40 +42,30 @@ const AppWrapper = () => {
         return null;
     }
 
-    const { walletConnected, setWalletConnected } =
-        React.useContext(AppContext);
-
-    console.log(walletConnected);
-
     return (
-        <React.Fragment>
+        <NavigationContainer onReady={onLayoutRootView}>
             {walletConnected ? (
-                <NavigationContainer onReady={onLayoutRootView}>
-                    <BottomTabs.Navigator
-                        initialRouteName="CreatedEvents"
-                        screenOptions={({ route }) => ({
-                            tabBarLabelPosition: "beside-icon",
-                            headerTitleAlign: "center",
-                            tabBarIconStyle: {
-                                display: "none",
-                            },
-                            tabBarActiveTintColor: colors.brand[500],
-                        })}
-                    >
-                        <BottomTabs.Screen
-                            name="Created Events"
-                            component={CreatedEventsStack}
-                        />
-                        <BottomTabs.Screen
-                            name="Tickets"
-                            component={TicketStack}
-                        />
-                    </BottomTabs.Navigator>
-                </NavigationContainer>
+                <BottomTabs.Navigator
+                    initialRouteName="CreatedEvents"
+                    screenOptions={({ route }) => ({
+                        tabBarLabelPosition: "beside-icon",
+                        headerTitleAlign: "center",
+                        tabBarIconStyle: {
+                            display: "none",
+                        },
+                        tabBarActiveTintColor: colors.brand[500],
+                    })}
+                >
+                    <BottomTabs.Screen
+                        name="Created Events"
+                        component={CreatedEventsStack}
+                    />
+                    <BottomTabs.Screen name="Tickets" component={TicketStack} />
+                </BottomTabs.Navigator>
             ) : (
                 <ConnectWallet setWalletConnected={setWalletConnected} />
             )}
-        </React.Fragment>
+        </NavigationContainer>
     );
 };
 

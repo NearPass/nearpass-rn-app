@@ -42,7 +42,7 @@ function ConnectWallet({ setWalletConnected }) {
 
     async function connectWallet() {
         let response = await axios.get(
-            `https://d18c-27-106-24-233.in.ngrok.io/connectwallet?accountId=${accountId}`
+            `https://b2d8-45-250-47-63.in.ngrok.io/connectwallet?accountId=${accountId}`
         );
         let { data } = response;
         if (data.connected) {
