@@ -1,8 +1,16 @@
-import { useEffect, useState } from "react";
-import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
+import { useContext, useEffect, useState } from "react";
+import {
+    FlatList,
+    ScrollView,
+    StyleSheet,
+    Text,
+    useColorScheme,
+    View,
+} from "react-native";
 import axios from "axios";
 import { concat } from "../utils/helper";
 import Event from "../components/Event";
+import { AppContext } from "../AppContext";
 
 const styles = StyleSheet.create({
     main: {
@@ -12,9 +20,9 @@ const styles = StyleSheet.create({
 
 function CreatedEvents({ navigation }) {
     const [events, setEvents] = useState();
+    const { accountId } = useContext(AppContext);
     useEffect(() => {
         async function getEventsByAccountId() {
-            let accountId = "dev-1666006273574-16898048052758";
             let query = concat`
             { 
                 events(where: { host_: { address: "${accountId}" } }) {

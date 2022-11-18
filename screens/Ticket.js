@@ -1,15 +1,17 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FlatList, ScrollView, View } from "react-native";
 import { concat } from "../utils/helper";
 import TicketComp from "../components/TicketComp";
+import { AppContext } from "../AppContext";
 
 const Ticket = ({ navigation }) => {
     const [tickets, setTickets] = useState();
+    const { accountId } = useContext(AppContext);
+
     useEffect(() => {
         console.log(TicketComp);
         (async () => {
-            let accountId = "nearpassticketbuyer.testnet";
             let query = concat`
                     { 
                         tickets(where: { accountId: "${accountId}" }) {
