@@ -47,7 +47,7 @@ const VerifyTicket = ({ route }) => {
     async function verifyTicket(ticketId) {
         console.log(ticketId);
         let url = new URL(
-            `https://b2d8-45-250-47-63.in.ngrok.io/redeem?accountId=${encodeURIComponent(
+            `https://nearpass-server-production.up.railway.app/redeem?accountId=${encodeURIComponent(
                 accountId
             )}&ticketId=${encodeURIComponent(ticketId)}`
         );
