@@ -20,14 +20,27 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
+    button: {
+        backgroundColor: colors.brand[600],
+        padding: 10,
+        borderRadius: 5,
+        shadowColor: colors.brand[200],
+        shadowOffset: 10,
+        shadowOpacity: 100,
+        shadowRadius: 100,
+        marginBottom: 10,
+    },
 });
 
 const VerifyTicket = ({ route }) => {
     const { event } = route.params;
     const [type, setType] = useState(CameraType.back);
     const [permission, requestPermission] = Camera.useCameraPermissions();
-    const [processingQRCode, setProcessingQRCode] = useState(false);
+    const [scanCode, setScanCode] = useState(false);
+    const [verifyTx, setVerifyTx] = useState(null);
     const { accountId } = useContext(AppContext);
+    const [verificationStatus, setVerificationStatus] =
+        useState("Waiting for Ticket");
 
     useEffect(() => {
         async function startCamera() {
@@ -45,6 +58,8 @@ const VerifyTicket = ({ route }) => {
     }
 
     async function verifyTicket(ticketId) {
+        setScanCode(false);
+        setVerificationStatus("Verifying on-chain...");
         console.log(ticketId);
         let url = new URL(
             `https://nearpass-server-production.up.railway.app/redeem?accountId=${encodeURIComponent(
@@ -52,8 +67,12 @@ const VerifyTicket = ({ route }) => {
             )}&ticketId=${encodeURIComponent(ticketId)}`
         );
         let response = await axios.get(url.toString());
-        console.log(response.data);
-        // setProcessingQRCode(false);
+        let { error } = response.data;
+        if (error) {
+            setVerificationStatus("Ticket might be used!");
+        } else {
+            setVerificationStatus("Ticket Verified!");
+        }
     }
 
     return (
@@ -82,9 +101,8 @@ const VerifyTicket = ({ route }) => {
                         barCodeTypes: [BarCodeScanner.Constants.BarCodeType.qr],
                     }}
                     onBarCodeScanned={(scanningResult) => {
-                        if (!processingQRCode) {
+                        if (scanCode) {
                             verifyTicket(scanningResult.data);
-                            setProcessingQRCode(true);
                         }
                     }}
                     style={styles.camera}
@@ -92,12 +110,21 @@ const VerifyTicket = ({ route }) => {
                 ></Camera>
             </View>
             <View>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => setScanCode(true)}
+                >
+                    <Text style={{ color: colors.white }}>Verify Ticket</Text>
+                </TouchableOpacity>
+            </View>
+            <View style={{ alignItems: "center" }}>
                 <H5>
                     Verification Status:{" "}
                     <H5 additionalStyles={{ color: colors.gray[600] }}>
-                        No Ticket Detected
+                        {verificationStatus}
                     </H5>
                 </H5>
+                {verifyTx && <H5>Verify Tx Hash: {verifyTx}</H5>}
             </View>
         </View>
     );
