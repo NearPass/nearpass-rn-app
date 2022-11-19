@@ -30,18 +30,8 @@ const Event = ({ event, navigation }) => {
         if (thumbnail) {
             (async () => {
                 try {
-                    let image = await axios.get(
-                        `https://ipfs.io/ipfs/${thumbnail.replace(
-                            "ipfs://",
-                            ""
-                        )}`
-                    );
-                    // let image = await axios.get(
-                    //     `https://ipfs.io/ipfs/${res.data.image.replace(
-                    //         "ipfs://",
-                    //         ""
-                    //     )}`
-                    // );
+                    let image = await axios.get(thumbnail);
+
                     setImageB64(image.data);
                 } catch (e) {
                     console.log(e);

@@ -13,18 +13,8 @@ const TicketComp = ({ ticket, navigation }) => {
         if (ticket) {
             (async () => {
                 try {
-                    let image = await axios.get(
-                        `https://ipfs.io/ipfs/${ticket.event.thumbnail.replace(
-                            "ipfs://",
-                            ""
-                        )}`
-                    );
-                    // let image = await axios.get(
-                    //     `https://ipfs.io/ipfs/${metadata.data.image.replace(
-                    //         "ipfs://",
-                    //         ""
-                    //     )}`
-                    // );
+                    let image = await axios.get(ticket.event.thumbnail);
+
                     setImage(image.data);
                 } catch (e) {
                     console.log(e);
