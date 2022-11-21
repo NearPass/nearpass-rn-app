@@ -22,23 +22,9 @@ const styles = StyleSheet.create({
 });
 
 const Event = ({ event, navigation }) => {
-    const { title, thumbnail, host, timestamp, attendees, id } = event;
+    const { title, host, timestamp, image } = event;
 
-    const [imageB64, setImageB64] = useState();
-
-    useEffect(() => {
-        if (thumbnail) {
-            (async () => {
-                try {
-                    let image = await axios.get(thumbnail);
-
-                    setImageB64(image.data);
-                } catch (e) {
-                    console.log(e);
-                }
-            })();
-        }
-    }, [thumbnail]);
+    console.log("Image: ", image);
 
     return (
         <View
@@ -66,12 +52,13 @@ const Event = ({ event, navigation }) => {
                     marginBottom: 5,
                 }}
             >
-                {imageB64 && (
-                    <Image
-                        source={{ uri: imageB64 }}
-                        style={{ flex: 1, resizeMode: "cover" }}
-                    />
-                )}
+                <Image
+                    source={{ uri: image }}
+                    style={{
+                        flex: 1,
+                        resizeMode: "cover",
+                    }}
+                />
             </View>
             <View
                 style={{

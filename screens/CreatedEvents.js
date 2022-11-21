@@ -48,7 +48,12 @@ function CreatedEvents({ navigation }) {
                 }
             );
 
-            setEvents(res.data.data.events);
+            let events = res.data.data.events;
+            for await (let event of events) {
+                let image = await axios.get(event.thumbnail);
+                event.image = image.data;
+            }
+            setEvents(events);
         }
         getEventsByAccountId();
     }, []);
@@ -59,10 +64,14 @@ function CreatedEvents({ navigation }) {
                 <FlatList
                     data={events}
                     renderItem={({ item }) => (
-                        <Event event={item} navigation={navigation} />
+                        <Event
+                            key={item.id}
+                            event={item}
+                            navigation={navigation}
+                        />
                     )}
                     keyExtractor={(item) => {
-                        return item.title;
+                        return item.id;
                     }}
                     style={{ padding: 20 }}
                 />

@@ -3,6 +3,8 @@
 -   This app lets the event owner verify tickets on-chain.
 -   Also, this app lets the event attendees show ticket.
 
+This app also requires [nearpass-server](https://github.com/NearPass/nearpass-server) to be up (in case you want to test everything locally)
+
 #### How to run
 
 ```bash
